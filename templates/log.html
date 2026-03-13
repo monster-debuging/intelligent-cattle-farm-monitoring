@@ -1,0 +1,1664 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>牛场监测系统</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 20px;-->
+<!--            background: url('../static/images/background.jpg') no-repeat center center fixed;-->
+<!--            background-size: cover;-->
+<!--            min-height: 100vh;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            max-width: 1200px;-->
+<!--            margin: 0 auto;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .index-link {-->
+<!--            display: inline-block;-->
+<!--            margin: 50px auto;-->
+<!--            padding: 20px 40px;-->
+<!--            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 4px 15px rgba(0,0,0,0.2);-->
+<!--            transition: all 0.3s ease;-->
+<!--        }-->
+
+<!--        .index-link:hover {-->
+<!--            transform: translateY(-2px);-->
+<!--            box-shadow: 0 6px 20px rgba(0,0,0,0.3);-->
+<!--        }-->
+
+<!--        .index-link a {-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--            font-size: 18px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .features {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));-->
+<!--            gap: 20px;-->
+<!--            margin-top: 40px;-->
+<!--        }-->
+
+<!--        .feature-card {-->
+<!--            background: rgba(255, 255, 255, 0.9);-->
+<!--            padding: 20px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 10px rgba(0,0,0,0.1);-->
+<!--        }-->
+
+<!--        .feature-card h3 {-->
+<!--            color: #333;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        .feature-card p {-->
+<!--            color: #666;-->
+<!--            line-height: 1.6;-->
+<!--        }-->
+
+<!--        .auth-section {-->
+<!--            background: rgba(255, 255, 255, 0.9);-->
+<!--            padding: 30px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 10px rgba(0,0,0,0.1);-->
+<!--            margin: 30px auto;-->
+<!--            max-width: 400px;-->
+<!--            text-align: left;-->
+<!--        }-->
+
+<!--        .auth-section h2 {-->
+<!--            text-align: center;-->
+<!--            color: #333;-->
+<!--            margin-top: 0;-->
+<!--        }-->
+
+<!--        .form-group {-->
+<!--            margin-bottom: 15px;-->
+<!--        }-->
+
+<!--        .form-group label {-->
+<!--            display: block;-->
+<!--            margin-bottom: 5px;-->
+<!--            color: #333;-->
+<!--        }-->
+
+<!--        .form-group input {-->
+<!--            width: 100%;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ddd;-->
+<!--            border-radius: 4px;-->
+<!--            box-sizing: border-box;-->
+<!--        }-->
+
+<!--        .btn {-->
+<!--            background: #667eea;-->
+<!--            color: white;-->
+<!--            padding: 12px 20px;-->
+<!--            border: none;-->
+<!--            border-radius: 4px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            width: 100%;-->
+<!--            margin-top: 10px;-->
+<!--        }-->
+
+<!--        .btn:hover {-->
+<!--            background: #5a6fd8;-->
+<!--        }-->
+
+<!--        .btn-register {-->
+<!--            background: #4CAF50;-->
+<!--        }-->
+
+<!--        .btn-register:hover {-->
+<!--            background: #45a049;-->
+<!--        }-->
+
+<!--        .btn-login {-->
+<!--            background: #2196F3;-->
+<!--        }-->
+
+<!--        .btn-login:hover {-->
+<!--            background: #0b7dda;-->
+<!--        }-->
+
+<!--        .switch-form {-->
+<!--            text-align: center;-->
+<!--            margin-top: 15px;-->
+<!--        }-->
+
+<!--        .switch-form a {-->
+<!--            color: #667eea;-->
+<!--            text-decoration: none;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .switch-form a:hover {-->
+<!--            text-decoration: underline;-->
+<!--        }-->
+
+<!--        .verification-code {-->
+<!--            display: flex;-->
+<!--            gap: 10px;-->
+<!--        }-->
+
+<!--        .verification-code input {-->
+<!--            flex: 1;-->
+<!--        }-->
+
+<!--        .verification-code button {-->
+<!--            background: #2196F3;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 4px;-->
+<!--            padding: 10px 15px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+
+<!--        .verification-code button:disabled {-->
+<!--            background: #cccccc;-->
+<!--            cursor: not-allowed;-->
+<!--        }-->
+
+<!--        .credentials-info {-->
+<!--            background: rgba(232, 244, 253, 0.9);-->
+<!--            padding: 15px;-->
+<!--            border-radius: 8px;-->
+<!--            margin: 20px auto;-->
+<!--            max-width: 400px;-->
+<!--            border-left: 4px solid #2196F3;-->
+<!--        }-->
+
+<!--        .credentials-info h3 {-->
+<!--            margin-top: 0;-->
+<!--            color: #2196F3;-->
+<!--        }-->
+
+<!--        .credential-item {-->
+<!--            text-align: left;-->
+<!--            margin: 10px 0;-->
+<!--            padding: 8px;-->
+<!--            background: rgba(255, 255, 255, 0.8);-->
+<!--            border-radius: 4px;-->
+<!--        }-->
+
+<!--        /* 注册表单位置 */-->
+<!--        .register-form {-->
+<!--            display: none;-->
+<!--        }-->
+
+<!--        /* 选择界面 */-->
+<!--        .selection-interface {-->
+<!--            display: none;-->
+<!--            background: rgba(255, 255, 255, 0.95);-->
+<!--            padding: 40px;-->
+<!--            border-radius: 15px;-->
+<!--            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);-->
+<!--            max-width: 600px;-->
+<!--            margin: 50px auto;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .selection-title {-->
+<!--            color: #2c3e50;-->
+<!--            margin-bottom: 30px;-->
+<!--            font-size: 2em;-->
+<!--        }-->
+
+<!--        .selection-options {-->
+<!--            display: grid;-->
+<!--            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));-->
+<!--            gap: 20px;-->
+<!--            margin-top: 30px;-->
+<!--        }-->
+
+<!--        .option-card {-->
+<!--            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);-->
+<!--            color: white;-->
+<!--            padding: 25px;-->
+<!--            border-radius: 12px;-->
+<!--            cursor: pointer;-->
+<!--            transition: transform 0.3s ease, box-shadow 0.3s ease;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        .option-card:hover {-->
+<!--            transform: translateY(-5px);-->
+<!--            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);-->
+<!--        }-->
+
+<!--        .option-card h3 {-->
+<!--            margin: 10px 0;-->
+<!--            font-size: 1.2em;-->
+<!--        }-->
+
+<!--        .option-card p {-->
+<!--            opacity: 0.9;-->
+<!--            margin-bottom: 10px;-->
+<!--        }-->
+
+<!--        .logout-btn {-->
+<!--            background: #e74c3c;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 10px 20px;-->
+<!--            border-radius: 6px;-->
+<!--            cursor: pointer;-->
+<!--            margin-top: 20px;-->
+<!--            font-size: 16px;-->
+<!--        }-->
+
+<!--        .logout-btn:hover {-->
+<!--            background: #c0392b;-->
+<!--        }-->
+
+<!--        /* 登录状态提示 */-->
+<!--        .login-status {-->
+<!--            position: fixed;-->
+<!--            top: 10px;-->
+<!--            right: 10px;-->
+<!--            background: rgba(0, 0, 0, 0.7);-->
+<!--            color: white;-->
+<!--            padding: 10px 15px;-->
+<!--            border-radius: 5px;-->
+<!--            font-size: 14px;-->
+<!--            z-index: 1000;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <h1 style="color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">牛场监测系统</h1>-->
+
+<!--        &lt;!&ndash; 登录状态提示 &ndash;&gt;-->
+<!--        <div class="login-status" id="loginStatus" style="display: none;">-->
+<!--            当前用户: <span id="currentUserName"></span> |-->
+<!--            <a href="#" onclick="forceLogout()" style="color: #ffeb3b; text-decoration: none;">强制退出</a>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 选择界面 &ndash;&gt;-->
+<!--        <div class="selection-interface" id="selectionInterface">-->
+<!--            <h1 class="selection-title">选择系统界面</h1>-->
+<!--            <p style="text-align: center; color: #6c757d; margin-bottom: 30px; font-size: 1.1em;">-->
+<!--                欢迎回来，<span id="welcomeUser" style="color: #667eea; font-weight: bold;"></span>！-->
+<!--            </p>-->
+<!--            <div class="selection-options">-->
+<!--                <div class="option-card" onclick="showDashboard()">-->
+<!--                    <h3>📊 大屏监控</h3>-->
+<!--                    <p>实时监控牛场各项数据</p>-->
+<!--                </div>-->
+<!--                <div class="option-card" onclick="showFarmInfo()">-->
+<!--                    <h3>🐮 牛场信息</h3>-->
+<!--                    <p>查看牛只详细信息</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="logout-btn" onclick="logout()">退出登录</button>-->
+<!--        </div>-->
+
+<!--        <div class="features">-->
+<!--            <div class="feature-card">-->
+<!--                <h3>实时监控</h3>-->
+<!--                <p>实时收集和展示牛的行为数据，包括活动模式、进食习惯等关键指标。</p>-->
+<!--            </div>-->
+<!--            <div class="feature-card">-->
+<!--                <h3>数据可视化</h3>-->
+<!--                <p>通过图表和仪表板直观展示数据分析结果，便于快速理解和决策。</p>-->
+<!--            </div>-->
+<!--            <div class="feature-card">-->
+<!--                <h3>智能分析</h3>-->
+<!--                <p>运用AI算法识别异常行为，提前预警潜在健康问题。</p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 登录表单 &ndash;&gt;-->
+<!--        <div class="auth-section" id="loginSection">-->
+<!--            <h2>用户登录</h2>-->
+<!--            <form id="loginForm">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="loginUsername">用户名:</label>-->
+<!--                    <input type="text" id="loginUsername" name="username" placeholder="输入用户名" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="loginPassword">密码:</label>-->
+<!--                    <input type="password" id="loginPassword" name="password" placeholder="输入密码" required>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-login">登录</button>-->
+<!--            </form>-->
+
+<!--            <div class="switch-form">-->
+<!--                <p>还没有账户？ <a id="showRegisterLink">立即注册</a></p>-->
+<!--                <p><a id="showEmailLoginLink">邮箱验证码登录</a></p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 注册表单 &ndash;&gt;-->
+<!--        <div class="auth-section register-form" id="registerSection">-->
+<!--            <h2>用户注册</h2>-->
+<!--            <form id="registerForm">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="regUsername">用户名:</label>-->
+<!--                    <input type="text" id="regUsername" name="username" placeholder="输入用户名" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="regEmail">邮箱:</label>-->
+<!--                    <input type="email" id="regEmail" name="email" placeholder="输入邮箱地址" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="regPassword">密码:</label>-->
+<!--                    <input type="password" id="regPassword" name="password" placeholder="输入密码" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="regConfirmPassword">确认密码:</label>-->
+<!--                    <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="再次输入密码" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label>邮箱验证码:</label>-->
+<!--                    <div class="verification-code">-->
+<!--                        <input type="text" id="regVerificationCode" placeholder="输入验证码" required>-->
+<!--                        <button type="button" id="sendRegCodeBtn">获取验证码</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-register">注册</button>-->
+<!--            </form>-->
+
+<!--            <div class="switch-form">-->
+<!--                <p>已有账户？ <a id="showLoginLink">立即登录</a></p>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; 邮箱登录表单 &ndash;&gt;-->
+<!--        <div class="auth-section register-form" id="emailLoginSection">-->
+<!--            <h2>邮箱登录</h2>-->
+<!--            <form id="emailLoginForm">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="emailInput">邮箱:</label>-->
+<!--                    <input type="email" id="emailInput" name="email" placeholder="输入邮箱地址" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label>邮箱验证码:</label>-->
+<!--                    <div class="verification-code">-->
+<!--                        <input type="text" id="emailVerificationCode" placeholder="输入验证码" required>-->
+<!--                        <button type="button" id="sendEmailCodeBtn">获取验证码</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-login">登录</button>-->
+<!--            </form>-->
+
+<!--            <div class="switch-form">-->
+<!--                <p><a id="backToNormalLogin">返回普通登录</a></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        // 模拟用户数据库-->
+<!--        let users = JSON.parse(localStorage.getItem('users')) || [-->
+<!--            { username: 'admin', email: 'admin@example.com', password: 'admin123' },-->
+<!--            { username: 'user', email: 'user@example.com', password: 'user123' }-->
+<!--        ];-->
+
+<!--        // 验证码存储-->
+<!--        let verificationCodes = {};-->
+
+<!--        // 保存用户数据到本地存储-->
+<!--        function saveUsers() {-->
+<!--            localStorage.setItem('users', JSON.stringify(users));-->
+<!--        }-->
+
+<!--        // 生成随机验证码-->
+<!--        function generateVerificationCode() {-->
+<!--            return Math.floor(100000 + Math.random() * 900000).toString(); // 6位数字-->
+<!--        }-->
+
+<!--        // 发送验证码模拟函数-->
+<!--        function sendVerificationCode(email, purpose) {-->
+<!--            const code = generateVerificationCode();-->
+<!--            verificationCodes[email] = {-->
+<!--                code: code,-->
+<!--                purpose: purpose,-->
+<!--                expires: Date.now() + 5 * 60 * 1000 // 5分钟过期-->
+<!--            };-->
+
+<!--            // 这里在实际应用中应该是调用邮件服务API-->
+<!--            console.log(`验证码已发送到 ${email}: ${code}`);-->
+<!--            alert(`验证码已发送到 ${email}，请查收邮件（验证码: ${code}，5分钟内有效）`);-->
+
+<!--            return code;-->
+<!--        }-->
+
+<!--        // 验证验证码-->
+<!--        function verifyCode(email, inputCode) {-->
+<!--            const stored = verificationCodes[email];-->
+<!--            if (!stored) return false;-->
+
+<!--            if (Date.now() > stored.expires) {-->
+<!--                delete verificationCodes[email];-->
+<!--                return false;-->
+<!--            }-->
+
+<!--            if (stored.code === inputCode) {-->
+<!--                delete verificationCodes[email]; // 验证成功后删除-->
+<!--                return true;-->
+<!--            }-->
+
+<!--            return false;-->
+<!--        }-->
+
+<!--        // 页面加载完成后的初始化-->
+<!--        document.addEventListener('DOMContentLoaded', function() {-->
+<!--            const loginForm = document.getElementById('loginForm');-->
+<!--            const registerForm = document.getElementById('registerForm');-->
+<!--            const emailLoginForm = document.getElementById('emailLoginForm');-->
+<!--            const showRegisterLink = document.getElementById('showRegisterLink');-->
+<!--            const showLoginLink = document.getElementById('showLoginLink');-->
+<!--            const showEmailLoginLink = document.getElementById('showEmailLoginLink');-->
+<!--            const backToNormalLogin = document.getElementById('backToNormalLogin');-->
+<!--            const sendRegCodeBtn = document.getElementById('sendRegCodeBtn');-->
+<!--            const sendEmailCodeBtn = document.getElementById('sendEmailCodeBtn');-->
+<!--            const loginSection = document.getElementById('loginSection');-->
+<!--            const registerSection = document.getElementById('registerSection');-->
+<!--            const emailLoginSection = document.getElementById('emailLoginSection');-->
+<!--            const selectionInterface = document.getElementById('selectionInterface');-->
+<!--            const loginStatus = document.getElementById('loginStatus');-->
+<!--            const currentUserName = document.getElementById('currentUserName');-->
+
+<!--            // 初始状态：只显示登录表单-->
+<!--            registerSection.style.display = 'none';-->
+<!--            emailLoginSection.style.display = 'none';-->
+<!--            selectionInterface.style.display = 'none';-->
+
+<!--            // 检查登录状态-->
+<!--            const isLoggedIn = localStorage.getItem('dashboardLoggedIn') === 'true';-->
+<!--            const currentUser = localStorage.getItem('currentUser');-->
+
+<!--            if (isLoggedIn && currentUser) {-->
+<!--                // 已登录，直接显示选择界面-->
+<!--                loginSection.style.display = 'none';-->
+<!--                registerSection.style.display = 'none';-->
+<!--                emailLoginSection.style.display = 'none';-->
+<!--                selectionInterface.style.display = 'block';-->
+<!--                document.getElementById('welcomeUser').textContent = currentUser;-->
+
+<!--                // 显示登录状态提示-->
+<!--                loginStatus.style.display = 'block';-->
+<!--                currentUserName.textContent = currentUser;-->
+<!--            } else {-->
+<!--                // 未登录，显示登录表单-->
+<!--                loginSection.style.display = 'block';-->
+<!--                registerSection.style.display = 'none';-->
+<!--                emailLoginSection.style.display = 'none';-->
+<!--                selectionInterface.style.display = 'none';-->
+<!--            }-->
+
+<!--            // 显示注册表单-->
+<!--            showRegisterLink.addEventListener('click', function() {-->
+<!--                loginSection.style.display = 'none';-->
+<!--                emailLoginSection.style.display = 'none';-->
+<!--                registerSection.style.display = 'block';-->
+<!--            });-->
+
+<!--            // 显示登录表单-->
+<!--            showLoginLink.addEventListener('click', function() {-->
+<!--                registerSection.style.display = 'none';-->
+<!--                emailLoginSection.style.display = 'none';-->
+<!--                loginSection.style.display = 'block';-->
+<!--            });-->
+
+<!--            // 显示邮箱登录表单-->
+<!--            showEmailLoginLink.addEventListener('click', function() {-->
+<!--                loginSection.style.display = 'none';-->
+<!--                registerSection.style.display = 'none';-->
+<!--                emailLoginSection.style.display = 'block';-->
+<!--            });-->
+
+<!--            // 返回普通登录表单-->
+<!--            backToNormalLogin.addEventListener('click', function() {-->
+<!--                emailLoginSection.style.display = 'none';-->
+<!--                loginSection.style.display = 'block';-->
+<!--            });-->
+
+<!--            // 发送注册验证码-->
+<!--            sendRegCodeBtn.addEventListener('click', function() {-->
+<!--                const email = document.getElementById('regEmail').value;-->
+<!--                if (!email) {-->
+<!--                    alert('请先填写邮箱地址！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                if (!validateEmail(email)) {-->
+<!--                    alert('请输入有效的邮箱地址！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                sendVerificationCode(email, 'register');-->
+
+<!--                // 禁用按钮一段时间-->
+<!--                sendRegCodeBtn.disabled = true;-->
+<!--                sendRegCodeBtn.textContent = '60秒后重试';-->
+
+<!--                let count = 60;-->
+<!--                const timer = setInterval(() => {-->
+<!--                    count&#45;&#45;;-->
+<!--                    sendRegCodeBtn.textContent = `${count}秒后重试`;-->
+<!--                    if (count <= 0) {-->
+<!--                        clearInterval(timer);-->
+<!--                        sendRegCodeBtn.disabled = false;-->
+<!--                        sendRegCodeBtn.textContent = '获取验证码';-->
+<!--                    }-->
+<!--                }, 1000);-->
+<!--            });-->
+
+<!--            // 发送邮箱登录验证码-->
+<!--            sendEmailCodeBtn.addEventListener('click', function() {-->
+<!--                const email = document.getElementById('emailInput').value;-->
+<!--                if (!email) {-->
+<!--                    alert('请先填写邮箱地址！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                if (!validateEmail(email)) {-->
+<!--                    alert('请输入有效的邮箱地址！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 检查邮箱是否已注册-->
+<!--                const userExists = users.some(user => user.email === email);-->
+<!--                if (!userExists) {-->
+<!--                    alert('此邮箱尚未注册，请先注册！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                sendVerificationCode(email, 'login');-->
+
+<!--                // 禁用按钮一段时间-->
+<!--                sendEmailCodeBtn.disabled = true;-->
+<!--                sendEmailCodeBtn.textContent = '60秒后重试';-->
+
+<!--                let count = 60;-->
+<!--                const timer = setInterval(() => {-->
+<!--                    count&#45;&#45;;-->
+<!--                    sendEmailCodeBtn.textContent = `${count}秒后重试`;-->
+<!--                    if (count <= 0) {-->
+<!--                        clearInterval(timer);-->
+<!--                        sendEmailCodeBtn.disabled = false;-->
+<!--                        sendEmailCodeBtn.textContent = '获取验证码';-->
+<!--                    }-->
+<!--                }, 1000);-->
+<!--            });-->
+
+<!--            // 登录表单提交事件-->
+<!--            loginForm.addEventListener('submit', function(e) {-->
+<!--                e.preventDefault();-->
+
+<!--                const username = document.getElementById('loginUsername').value.trim();-->
+<!--                const password = document.getElementById('loginPassword').value;-->
+
+<!--                const user = users.find(u => u.username === username && u.password === password);-->
+
+<!--                if (user) {-->
+<!--                    // 登录成功-->
+<!--                    localStorage.setItem('dashboardLoggedIn', 'true');-->
+<!--                    localStorage.setItem('currentUser', username);-->
+<!--                    alert(`欢迎 ${username}！登录成功，即将跳转到界面选择...`);-->
+
+<!--                    // 延迟跳转到选择界面-->
+<!--                    setTimeout(() => {-->
+<!--                        loginSection.style.display = 'none';-->
+<!--                        registerSection.style.display = 'none';-->
+<!--                        emailLoginSection.style.display = 'none';-->
+<!--                        selectionInterface.style.display = 'block';-->
+<!--                        document.getElementById('welcomeUser').textContent = username;-->
+
+<!--                        // 显示登录状态提示-->
+<!--                        loginStatus.style.display = 'block';-->
+<!--                        currentUserName.textContent = username;-->
+<!--                    }, 1500);-->
+<!--                } else {-->
+<!--                    let errorMsg = '用户名或密码错误！\n\n可用账户:\n- 管理员: admin / admin123\n- 普通用户: user / user123';-->
+
+<!--                    // 检查是否是用户名或密码错误-->
+<!--                    const userExists = users.some(u => u.username === username);-->
+<!--                    if (userExists) {-->
+<!--                        errorMsg = '密码错误！请检查密码是否正确。\n\n可用账户:\n- 管理员: admin / admin123\n- 普通用户: user / user123';-->
+<!--                    } else {-->
+<!--                        errorMsg = '用户名不存在！请检查用户名是否正确。\n\n可用账户:\n- 管理员: admin / admin123\n- 普通用户: user / user123';-->
+<!--                    }-->
+
+<!--                    alert(errorMsg);-->
+<!--                }-->
+<!--            });-->
+
+<!--            // 注册表单提交事件-->
+<!--            registerForm.addEventListener('submit', function(e) {-->
+<!--                e.preventDefault();-->
+
+<!--                const username = document.getElementById('regUsername').value;-->
+<!--                const email = document.getElementById('regEmail').value;-->
+<!--                const password = document.getElementById('regPassword').value;-->
+<!--                const confirmPassword = document.getElementById('regConfirmPassword').value;-->
+<!--                const verificationCode = document.getElementById('regVerificationCode').value;-->
+
+<!--                // 验证输入-->
+<!--                if (password !== confirmPassword) {-->
+<!--                    alert('两次输入的密码不一致！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                if (password.length < 6) {-->
+<!--                    alert('密码长度至少6位！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                if (!validateEmail(email)) {-->
+<!--                    alert('请输入有效的邮箱地址！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 检查用户名是否已存在-->
+<!--                if (users.some(u => u.username === username)) {-->
+<!--                    alert('用户名已存在，请选择其他用户名！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 检查邮箱是否已注册-->
+<!--                if (users.some(u => u.email === email)) {-->
+<!--                    alert('邮箱已被注册，请使用其他邮箱！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 验证验证码-->
+<!--                if (!verifyCode(email, verificationCode)) {-->
+<!--                    alert('验证码错误或已过期！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 注册新用户-->
+<!--                users.push({ username, email, password });-->
+<!--                saveUsers();-->
+
+<!--                alert('注册成功！请使用新账户登录。');-->
+
+<!--                // 清空表单并返回登录页-->
+<!--                registerForm.reset();-->
+<!--                registerSection.style.display = 'none';-->
+<!--                loginSection.style.display = 'block';-->
+<!--            });-->
+
+<!--            // 邮箱登录表单提交事件-->
+<!--            emailLoginForm.addEventListener('submit', function(e) {-->
+<!--                e.preventDefault();-->
+
+<!--                const email = document.getElementById('emailInput').value;-->
+<!--                const verificationCode = document.getElementById('emailVerificationCode').value;-->
+
+<!--                // 验证验证码-->
+<!--                if (!verifyCode(email, verificationCode)) {-->
+<!--                    alert('验证码错误或已过期！');-->
+<!--                    return;-->
+<!--                }-->
+
+<!--                // 查找用户-->
+<!--                const user = users.find(u => u.email === email);-->
+<!--                if (user) {-->
+<!--                    // 登录成功-->
+<!--                    localStorage.setItem('dashboardLoggedIn', 'true');-->
+<!--                    localStorage.setItem('currentUser', user.username);-->
+<!--                    alert(`欢迎 ${user.username}！登录成功，即将跳转到界面选择...`);-->
+
+<!--                    // 延迟跳转到选择界面-->
+<!--                    setTimeout(() => {-->
+<!--                        loginSection.style.display = 'none';-->
+<!--                        registerSection.style.display = 'none';-->
+<!--                        emailLoginSection.style.display = 'none';-->
+<!--                        selectionInterface.style.display = 'block';-->
+<!--                        document.getElementById('welcomeUser').textContent = user.username;-->
+
+<!--                        // 显示登录状态提示-->
+<!--                        loginStatus.style.display = 'block';-->
+<!--                        currentUserName.textContent = user.username;-->
+<!--                    }, 1500);-->
+<!--                } else {-->
+<!--                    alert('邮箱未注册，请先注册！');-->
+<!--                }-->
+<!--            });-->
+
+<!--            // 邮箱验证函数-->
+<!--            function validateEmail(email) {-->
+<!--                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;-->
+<!--                return re.test(email);-->
+<!--            }-->
+<!--        });-->
+
+<!--        // 显示大屏界面-->
+<!--        function showDashboard() {-->
+<!--            window.location.href = 'index.html';-->
+<!--        }-->
+
+<!--        // 显示牛场信息界面-->
+<!--        function showFarmInfo() {-->
+<!--            window.location.href = 'cow_info.html';-->
+<!--        }-->
+
+<!--        // 退出登录-->
+<!--        function logout() {-->
+<!--            if (confirm('确定要退出登录吗？')) {-->
+<!--                localStorage.removeItem('dashboardLoggedIn');-->
+<!--                localStorage.removeItem('currentUser');-->
+
+<!--                // 重置界面状态-->
+<!--                document.getElementById('selectionInterface').style.display = 'none';-->
+<!--                document.getElementById('loginSection').style.display = 'block';-->
+<!--                document.getElementById('registerSection').style.display = 'none';-->
+<!--                document.getElementById('emailLoginSection').style.display = 'none';-->
+<!--                document.getElementById('loginStatus').style.display = 'none';-->
+
+<!--                // 清空表单-->
+<!--                document.getElementById('loginForm').reset();-->
+<!--                document.getElementById('registerForm').reset();-->
+<!--                document.getElementById('emailLoginForm').reset();-->
+<!--            }-->
+<!--        }-->
+
+<!--        // 强制退出函数（用于清除所有登录状态）-->
+<!--        function forceLogout() {-->
+<!--            if (confirm('确定要强制退出吗？这将清除所有登录信息。')) {-->
+<!--                localStorage.removeItem('dashboardLoggedIn');-->
+<!--                localStorage.removeItem('currentUser');-->
+
+<!--                // 重置界面状态-->
+<!--                document.getElementById('selectionInterface').style.display = 'none';-->
+<!--                document.getElementById('loginSection').style.display = 'block';-->
+<!--                document.getElementById('registerSection').style.display = 'none';-->
+<!--                document.getElementById('emailLoginSection').style.display = 'none';-->
+<!--                document.getElementById('loginStatus').style.display = 'none';-->
+
+<!--                // 清空表单-->
+<!--                document.getElementById('loginForm').reset();-->
+<!--                document.getElementById('registerForm').reset();-->
+<!--                document.getElementById('emailLoginForm').reset();-->
+
+<!--                alert('已强制退出，登录信息已清除！');-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛场监测系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: url('../static/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .index-link {
+            display: inline-block;
+            margin: 50px auto;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .index-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .index-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .auth-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 30px auto;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .auth-section h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #5a6fd8;
+        }
+
+        .btn-register {
+            background: #4CAF50;
+        }
+
+        .btn-register:hover {
+            background: #45a049;
+        }
+
+        .btn-login {
+            background: #2196F3;
+        }
+
+        .btn-login:hover {
+            background: #0b7dda;
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .switch-form a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        .verification-code {
+            display: flex;
+            gap: 10px;
+        }
+
+        .verification-code input {
+            flex: 1;
+        }
+
+        .verification-code button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .verification-code button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .credentials-info {
+            background: rgba(232, 244, 253, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 400px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .credentials-info h3 {
+            margin-top: 0;
+            color: #2196F3;
+        }
+
+        .credential-item {
+            text-align: left;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+        }
+
+        /* 注册表单位置 */
+        .register-form {
+            display: none;
+        }
+
+        /* 选择界面 */
+        .selection-interface {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .selection-title {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .selection-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-card h3 {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .option-card p {
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        /* 登录状态提示 */
+        .login-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        /* 消息提示样式 */
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">牛场监测系统</h1>
+
+        <!-- 登录状态提示 -->
+        <div class="login-status" id="loginStatus" style="display: none;">
+            当前用户: <span id="currentUserName"></span> |
+            <a href="#" onclick="forceLogout()" style="color: #ffeb3b; text-decoration: none;">强制退出</a>
+        </div>
+
+        <!-- 选择界面 -->
+        <div class="selection-interface" id="selectionInterface">
+            <h1 class="selection-title">选择系统界面</h1>
+            <p style="text-align: center; color: #6c757d; margin-bottom: 30px; font-size: 1.1em;">
+                欢迎回来，<span id="welcomeUser" style="color: #667eea; font-weight: bold;"></span>！
+            </p>
+            <div class="selection-options">
+                <div class="option-card" onclick="showDashboard()">
+                    <h3>📊 大屏监控</h3>
+                    <p>实时监控牛场各项数据</p>
+                </div>
+                <div class="option-card" onclick="showFarmInfo()">
+                    <h3>🐮 牛场信息</h3>
+                    <p>查看牛只详细信息</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">退出登录</button>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>实时监控</h3>
+                <p>实时收集和展示牛的行为数据，包括活动模式、进食习惯等关键指标。</p>
+            </div>
+            <div class="feature-card">
+                <h3>数据可视化</h3>
+                <p>通过图表和仪表板直观展示数据分析结果，便于快速理解和决策。</p>
+            </div>
+            <div class="feature-card">
+                <h3>智能分析</h3>
+                <p>运用AI算法识别异常行为，提前预警潜在健康问题。</p>
+            </div>
+        </div>
+
+        <!-- 登录表单 -->
+        <div class="auth-section" id="loginSection">
+            <h2>用户登录</h2>
+            <div id="loginMessage" class="message" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">邮箱:</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="输入邮箱地址" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码:</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="输入密码">
+                    <div id="passwordFieldNote" style="font-size: 0.8em; color: #6c757d; margin-top: 5px;">(如果使用验证码登录，请留空)</div>
+                </div>
+                <div class="form-group">
+                    <label>登录方式:</label>
+                    <div>
+                        <label><input type="radio" name="loginMethod" value="password" checked> 密码登录</label>
+                        <label><input type="radio" name="loginMethod" value="code"> 验证码登录</label>
+                    </div>
+                </div>
+                <div class="form-group" id="codeField" style="display: none;">
+                    <label for="loginCode">验证码:</label>
+                    <div class="verification-code">
+                        <input type="text" id="loginCode" name="code" placeholder="输入验证码" maxlength="6">
+                        <button type="button" id="sendLoginCodeBtn">获取验证码</button>
+                    </div>
+                    <span id="loginCountdown"></span>
+                </div>
+                <button type="submit" class="btn btn-login">登录</button>
+            </form>
+
+            <div class="switch-form">
+                <p>还没有账户？ <a id="showRegisterLink">立即注册</a></p>
+                <p><a id="showEmailLoginLink">邮箱验证码登录</a></p> <!-- Optional: direct link to email login -->
+            </div>
+        </div>
+
+        <!-- 注册表单 -->
+        <div class="auth-section register-form" id="registerSection">
+            <h2>用户注册</h2>
+            <div id="registerMessage" class="message" style="display: none;"></div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regUsername">用户名:</label>
+                    <input type="text" id="regUsername" name="username" placeholder="输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">邮箱:</label>
+                    <input type="email" id="regEmail" name="email" placeholder="输入邮箱地址" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">密码:</label>
+                    <input type="password" id="regPassword" name="password" placeholder="输入密码" required>
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">确认密码:</label>
+                    <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder="再次输入密码" required>
+                </div>
+                <div class="form-group">
+                    <label>邮箱验证码:</label>
+                    <div class="verification-code">
+                        <input type="text" id="regVerificationCode" name="code" placeholder="输入验证码" maxlength="6" required>
+                        <button type="button" id="sendRegCodeBtn">获取验证码</button>
+                    </div>
+                    <span id="regCountdown"></span>
+                </div>
+                <button type="submit" class="btn btn-register">注册</button>
+            </form>
+
+            <div class="switch-form">
+                <p>已有账户？ <a id="showLoginLink">立即登录</a></p>
+            </div>
+        </div>
+
+        <!-- 邮箱登录表单 (此部分已合并到主登录表单中，可删除或保留备用) -->
+        <!-- <div class="auth-section register-form" id="emailLoginSection">
+            <h2>邮箱登录</h2>
+            <form id="emailLoginForm">
+                <div class="form-group">
+                    <label for="emailInput">邮箱:</label>
+                    <input type="email" id="emailInput" name="email" placeholder="输入邮箱地址" required>
+                </div>
+                <div class="form-group">
+                    <label>邮箱验证码:</label>
+                    <div class="verification-code">
+                        <input type="text" id="emailVerificationCode" name="code" placeholder="输入验证码" required>
+                        <button type="button" id="sendEmailCodeBtn">获取验证码</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-login">登录</button>
+            </form>
+
+            <div class="switch-form">
+                <p><a id="backToNormalLogin">返回普通登录</a></p>
+            </div>
+        </div> -->
+    </div>
+
+    <script>
+        // 用于存储倒计时定时器ID
+        let loginCountdownInterval = null;
+        let regCountdownInterval = null;
+
+        // 开始倒计时
+        function startCountdown(buttonId, countdownId, duration = 60) {
+            const button = document.getElementById(buttonId);
+            const countdownSpan = document.getElementById(countdownId);
+            let timeLeft = duration;
+
+            button.disabled = true;
+            countdownSpan.textContent = `(${timeLeft}s)`;
+
+            const interval = setInterval(() => {
+                timeLeft--;
+                countdownSpan.textContent = `(${timeLeft}s)`;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    button.disabled = false;
+                    countdownSpan.textContent = '';
+                }
+            }, 1000);
+
+            // 根据按钮ID存储定时器ID，以便后续可以清除
+            if(buttonId === 'sendLoginCodeBtn') loginCountdownInterval = interval;
+            if(buttonId === 'sendRegCodeBtn') regCountdownInterval = interval;
+        }
+
+        // 清除倒计时
+        function clearCountdown(buttonId, countdownId) {
+            const button = document.getElementById(buttonId);
+            const countdownSpan = document.getElementById(countdownId);
+            if(buttonId === 'sendLoginCodeBtn' && loginCountdownInterval) {
+                clearInterval(loginCountdownInterval);
+                loginCountdownInterval = null;
+            }
+            if(buttonId === 'sendRegCodeBtn' && regCountdownInterval) {
+                clearInterval(regCountdownInterval);
+                regCountdownInterval = null;
+            }
+            button.disabled = false;
+            countdownSpan.textContent = '';
+        }
+
+        // 显示/隐藏验证码字段
+        function toggleCodeField() {
+            const method = document.querySelector('input[name="loginMethod"]:checked').value;
+            const codeField = document.getElementById('codeField');
+            if (method === 'code') {
+                codeField.style.display = 'block';
+            } else {
+                codeField.style.display = 'none';
+                // 清除验证码登录的倒计时
+                clearCountdown('sendLoginCodeBtn', 'loginCountdown');
+            }
+        }
+
+        // 显示/隐藏表单
+        function showLoginForm() {
+            document.getElementById('registerSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+            // 清除可能的注册消息
+            hideMessage('registerMessage');
+            // 清除注册倒计时
+            clearCountdown('sendRegCodeBtn', 'regCountdown');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'block';
+            // 清除可能的登录消息
+            hideMessage('loginMessage');
+            // 清除登录倒计时
+            clearCountdown('sendLoginCodeBtn', 'loginCountdown');
+        }
+
+        // 显示消息
+        function showMessage(elementId, message, type) { // type: 'error', 'success'
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+        }
+
+        // 隐藏消息
+        function hideMessage(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'none';
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const showRegisterLink = document.getElementById('showRegisterLink');
+            const showLoginLink = document.getElementById('showLoginLink');
+            const showEmailLoginLink = document.getElementById('showEmailLoginLink'); // Optional
+            const sendRegCodeBtn = document.getElementById('sendRegCodeBtn');
+            const sendLoginCodeBtn = document.getElementById('sendLoginCodeBtn');
+            const loginSection = document.getElementById('loginSection');
+            const registerSection = document.getElementById('registerSection');
+            const selectionInterface = document.getElementById('selectionInterface');
+            const loginStatus = document.getElementById('loginStatus');
+            const currentUserName = document.getElementById('currentUserName');
+
+            // 初始状态：只显示登录表单
+            registerSection.style.display = 'none';
+            selectionInterface.style.display = 'none';
+
+            // 检查登录状态 (通过尝试获取用户信息)
+            fetch('/api/user_info')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 已登录，显示选择界面
+                        loginSection.style.display = 'none';
+                        registerSection.style.display = 'none';
+                        selectionInterface.style.display = 'block';
+                        document.getElementById('welcomeUser').textContent = data.data.username;
+
+                        // 显示登录状态提示
+                        loginStatus.style.display = 'block';
+                        currentUserName.textContent = data.data.username;
+                    } else {
+                        // 未登录，显示登录表单
+                        loginSection.style.display = 'block';
+                        registerSection.style.display = 'none';
+                        selectionInterface.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    // 网络错误或服务器错误，也视为未登录
+                    console.error('Check login status error:', error);
+                    loginSection.style.display = 'block';
+                    registerSection.style.display = 'none';
+                    selectionInterface.style.display = 'none';
+                });
+
+            // 登录方式切换
+            document.querySelectorAll('input[name="loginMethod"]').forEach(radio => {
+                radio.addEventListener('change', toggleCodeField);
+            });
+
+            // 发送注册验证码
+            sendRegCodeBtn.addEventListener('click', function() {
+                const email = document.getElementById('regEmail').value.trim();
+                if (!email) {
+                    showMessage('registerMessage', '请先填写邮箱地址！', 'error');
+                    return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showMessage('registerMessage', '请输入有效的邮箱地址！', 'error');
+                    return;
+                }
+
+                fetch('/api/send_code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, purpose: 'register' })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage('registerMessage', data.message, 'success');
+                        startCountdown('sendRegCodeBtn', 'regCountdown');
+                    } else {
+                        showMessage('registerMessage', data.message, 'error');
+                        // 失败时立即重置按钮
+                        clearCountdown('sendRegCodeBtn', 'regCountdown');
+                    }
+                })
+                .catch(error => {
+                    console.error('Send register code error:', error);
+                    showMessage('registerMessage', '发送验证码失败，请检查网络或联系管理员', 'error');
+                    // 失败时立即重置按钮
+                    clearCountdown('sendRegCodeBtn', 'regCountdown');
+                });
+            });
+
+            // 发送登录验证码
+            sendLoginCodeBtn.addEventListener('click', function() {
+                const email = document.getElementById('loginEmail').value.trim();
+                if (!email) {
+                    showMessage('loginMessage', '请先填写邮箱地址！', 'error');
+                    return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showMessage('loginMessage', '请输入有效的邮箱地址！', 'error');
+                    return;
+                }
+
+                fetch('/api/send_code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, purpose: 'login' })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage('loginMessage', data.message, 'success');
+                        startCountdown('sendLoginCodeBtn', 'loginCountdown');
+                    } else {
+                        showMessage('loginMessage', data.message, 'error');
+                        // 失败时立即重置按钮
+                        clearCountdown('sendLoginCodeBtn', 'loginCountdown');
+                    }
+                })
+                .catch(error => {
+                    console.error('Send login code error:', error);
+                    showMessage('loginMessage', '发送验证码失败，请检查网络或联系管理员', 'error');
+                    // 失败时立即重置按钮
+                    clearCountdown('sendLoginCodeBtn', 'loginCountdown');
+                });
+            });
+
+            // 登录表单提交事件
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+                const method = document.querySelector('input[name="loginMethod"]:checked').value;
+                const code = document.getElementById('loginCode').value.trim();
+
+                if (!email) {
+                    showMessage('loginMessage', '请输入邮箱', 'error');
+                    return;
+                }
+
+                let payload = { email: email, type: method };
+                if (method === 'password') {
+                    if (!password) {
+                        showMessage('loginMessage', '请输入密码', 'error');
+                        return;
+                    }
+                    payload.password = password;
+                } else { // code
+                    if (!code) {
+                        showMessage('loginMessage', '请输入验证码', 'error');
+                        return;
+                    }
+                    payload.code = code;
+                }
+
+                fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage('loginMessage', data.message, 'success');
+                        // 延迟跳转到选择界面
+                        setTimeout(() => {
+                            loginSection.style.display = 'none';
+                            registerSection.style.display = 'none';
+                            selectionInterface.style.display = 'block';
+                            document.getElementById('welcomeUser').textContent = data.data ? data.data.username : email; // Fallback to email if username not in response
+
+                            // 显示登录状态提示
+                            loginStatus.style.display = 'block';
+                            currentUserName.textContent = data.data ? data.data.username : email; // Fallback to email if username not in response
+                        }, 1500);
+                    } else {
+                        showMessage('loginMessage', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Login error:', error);
+                    let errorMsg = '登录失败，请检查网络或联系管理员';
+                    // if(error.responseJSON && error.responseJSON.message) {
+                    //     errorMsg = error.responseJSON.message;
+                    // }
+                    showMessage('loginMessage', errorMsg, 'error');
+                });
+            });
+
+            // 注册表单提交事件
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('regUsername').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const password = document.getElementById('regPassword').value.trim();
+                const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+                const code = document.getElementById('regVerificationCode').value.trim();
+
+                if (!username || !email || !password || !confirmPassword || !code) {
+                    showMessage('registerMessage', '请填写所有必填项', 'error');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showMessage('registerMessage', '两次输入的密码不一致', 'error');
+                    return;
+                }
+
+                fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password,
+                        confirmPassword: confirmPassword,
+                        code: code
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showMessage('registerMessage', data.message, 'success');
+                        // 注册成功后自动跳转到登录页或提示用户去登录
+                        setTimeout(function() {
+                             alert('注册成功，请前往登录！');
+                             showLoginForm();
+                             // 可以预填充邮箱
+                             document.getElementById('loginEmail').value = email;
+                        }, 1500); // 1.5秒后跳转或弹窗
+                    } else {
+                        showMessage('registerMessage', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Registration error:', error);
+                    let errorMsg = '注册失败，请检查网络或联系管理员';
+                    // if(error.responseJSON && error.responseJSON.message) {
+                    //     errorMsg = error.responseJSON.message;
+                    // }
+                    showMessage('registerMessage', errorMsg, 'error');
+                });
+            });
+
+            // 显示注册表单
+            showRegisterLink.addEventListener('click', showRegisterForm);
+
+            // 显示登录表单
+            showLoginLink.addEventListener('click', showLoginForm);
+
+            // 显示邮箱登录表单 (如果保留此功能)
+            showEmailLoginLink.addEventListener('click', function() {
+                // 切换登录方式为验证码
+                document.querySelector('input[name="loginMethod"][value="code"]').checked = true;
+                toggleCodeField();
+                // 显示登录表单
+                showLoginForm();
+            });
+
+        });
+
+        // 显示大屏界面
+        function showDashboard() {
+            window.location.href = 'index.html';
+        }
+
+        // 显示牛场信息界面
+        function showFarmInfo() {
+            window.location.href = 'cow_info.html';
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 重置界面状态
+                        document.getElementById('selectionInterface').style.display = 'none';
+                        document.getElementById('loginSection').style.display = 'block';
+                        document.getElementById('registerSection').style.display = 'none';
+                        document.getElementById('loginStatus').style.display = 'none';
+
+                        // 清空表单
+                        document.getElementById('loginForm').reset();
+                        document.getElementById('registerForm').reset();
+                        // 清除消息
+                        hideMessage('loginMessage');
+                        hideMessage('registerMessage');
+                        // 清除倒计时
+                        clearCountdown('sendLoginCodeBtn', 'loginCountdown');
+                        clearCountdown('sendRegCodeBtn', 'regCountdown');
+                    } else {
+                        alert('退出登录失败: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                    alert('退出登录失败，请检查网络或联系管理员');
+                });
+            }
+        }
+
+        // 强制退出函数（用于清除所有登录状态）
+        function forceLogout() {
+            if (confirm('确定要强制退出吗？这将清除所有登录信息。')) {
+                logout(); // 强制退出也调用标准退出流程
+            }
+        }
+    </script>
+</body>
+</html>

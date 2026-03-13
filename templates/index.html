@@ -1,0 +1,493 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--  <head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+<!--    <title>数据可视化</title>-->
+<!--    <link rel="stylesheet" href="../static/css/index.css" />-->
+<!--    <style>-->
+<!--        /* 添加返回菜单按钮样式 */-->
+<!--        .return-menu-btn {-->
+<!--            position: fixed;-->
+<!--            top: 20px;-->
+<!--            right: 20px;-->
+<!--            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            padding: 10px 20px;-->
+<!--            border-radius: 6px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            z-index: 1000;-->
+<!--            box-shadow: 0 4px 15px rgba(0,0,0,0.2);-->
+<!--            transition: all 0.3s ease;-->
+<!--        }-->
+
+<!--        .return-menu-btn:hover {-->
+<!--            transform: translateY(-2px);-->
+<!--            box-shadow: 0 6px 20px rgba(0,0,0,0.3);-->
+<!--        }-->
+<!--    </style>-->
+<!--  </head>-->
+<!--  <body>-->
+<!--    &lt;!&ndash; 返回菜单按钮 &ndash;&gt;-->
+<!--    <button class="return-menu-btn" onclick="returnToMenu()">返回菜单</button>-->
+
+<!--    &lt;!&ndash; 头部的盒子 &ndash;&gt;-->
+<!--    <header>-->
+<!--      <h1>牛行为监测数据可视化</h1>-->
+<!--      <div class="showTime"></div>-->
+<!--      <script>-->
+<!--        // 实时时钟更新（保持原样，已动态）-->
+<!--        var t = null;-->
+<!--        t = setTimeout(time, 1000);-->
+<!--        function time() {-->
+<!--          clearTimeout(t);-->
+<!--          dt = new Date();-->
+<!--          var y = dt.getFullYear();-->
+<!--          var mt = dt.getMonth() + 1;-->
+<!--          var day = dt.getDate();-->
+<!--          var h = dt.getHours().toString().padStart(2, '0');-->
+<!--          var m = dt.getMinutes().toString().padStart(2, '0');-->
+<!--          var s = dt.getSeconds().toString().padStart(2, '0');-->
+<!--          document.querySelector(".showTime").innerHTML =-->
+<!--            "当前时间：" +-->
+<!--            y +-->
+<!--            "年" +-->
+<!--            mt +-->
+<!--            "月" +-->
+<!--            day +-->
+<!--            "日 " +-->
+<!--            h +-->
+<!--            ":" +-->
+<!--            m +-->
+<!--            ":" +-->
+<!--            s;-->
+<!--          t = setTimeout(time, 1000);-->
+<!--        }-->
+<!--      </script>-->
+<!--    </header>-->
+
+<!--    &lt;!&ndash; 页面主体部分 &ndash;&gt;-->
+<!--    <section class="mainbox">-->
+<!--      <div class="column">-->
+<!--        <div class="panel bar">-->
+<!--          <h2>柱形图-牛各行为数量</h2>-->
+<!--          <div class="chart"></div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+<!--        <div class="panel line">-->
+<!--          <h2>-->
+<!--            折线图-异常个体数与温度的关系 <a href="javascript:;"></a-->
+<!--            ><a href="javascript:;"></a>-->
+<!--          </h2>-->
+<!--          <div class="chart">图表</div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+<!--        <div class="panel pie">-->
+<!--          <h2>折线图-异常个体数与光照强度的关系</h2>-->
+<!--          <div class="chart" id="lightIntensityChart"></div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="column">-->
+<!--        &lt;!&ndash; 数据统计模块 &ndash;&gt;-->
+<!--        <div class="no">-->
+<!--          <div class="no-hd">-->
+<!--            <ul>-->
+<!--              <li>75</li>-->
+<!--              <li>0</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          <div class="no-bd">-->
+<!--            <ul>-->
+<!--              <li>监测总数</li>-->
+<!--              <li>异常数量</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 家猪行为监测模块 &ndash;&gt;-->
+<!--        <div class="pig-monitor">-->
+<!--          <div class="monitor-title">-->
+<!--            <h2>YOLOv11 牛行为监测</h2>-->
+<!--            <div class="status">实时监测中 <span class="online">●</span></div>-->
+<!--          </div>-->
+<!--          <div class="monitor-view">-->
+<!--            <video-->
+<!--            src="../static/images/farm1_video.mp4"-->
+<!--            class="monitor-img"-->
+<!--            autoplay-->
+<!--            muted-->
+<!--            loop-->
+<!--            playsinline-->
+<!--            onerror="this.parentNode.innerHTML='<div style=\'color:white;text-align:center;line-height:6.5rem\'>视频加载失败</div>'"-->
+<!--          ></video>-->
+<!--          </div>-->
+
+<!--          <div class="monitor-stats">-->
+<!--            <div class="stat-item">-->
+<!--              <div class="stat-value">75</div>-->
+<!--              <div class="stat-label">监测总数</div>-->
+<!--            </div>-->
+<!--            <div class="stat-item">-->
+<!--              <div class="stat-value">12</div>-->
+<!--              <div class="stat-label">异常数量</div>-->
+<!--            </div>-->
+<!--            <div class="stat-item">-->
+<!--              <div class="stat-value">16.0%</div>-->
+<!--              <div class="stat-label">异常率</div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="column">-->
+<!--        &lt;!&ndash; 环境监测模块 替换原来的bar2 &ndash;&gt;-->
+<!--        <div class="panel bar2">-->
+<!--          <h2>环境监测</h2>-->
+<!--          <div class="chart" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100% - 0.6rem);">-->
+<!--            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">-->
+<!--              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">温度:</span>-->
+<!--              <span id="temperature" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">25.3°C</span>-->
+<!--            </div>-->
+<!--            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">-->
+<!--              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">光照:</span>-->
+<!--              <span id="light" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">420 Lx</span>-->
+<!--            </div>-->
+<!--            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">-->
+<!--              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">湿度:</span>-->
+<!--              <span id="humidity" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">68%</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+
+<!--        <div class="panel line2">-->
+<!--          <h2>折线图-异常个体数与湿度的关系</h2>-->
+<!--          <div class="chart">图表</div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+<!--        <div class="panel pie2">-->
+<!--          <h2>饼形图-牛场分布</h2>-->
+<!--          <div class="chart">图表</div>-->
+<!--          <div class="panel-footer"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
+
+<!--    <div class="farm-switcher-container">-->
+<!--      <div class="farm-switcher">-->
+<!--        <button id="farm1Btn" class="farm-btn active">一号牛场</button>-->
+<!--        <button id="farm2Btn" class="farm-btn">二号牛场</button>-->
+<!--        <button id="farm3Btn" class="farm-btn">三号牛场</button>-->
+<!--        <button id="farm4Btn" class="farm-btn">四号牛场</button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; 引入外部脚本 &ndash;&gt;-->
+<!--    <script src="../static/js/flexible.js"></script>-->
+<!--    <script src="../static/js/echarts.min.js"></script>-->
+<!--    <script src="../static/js/jquery.js"></script>-->
+<!--    <script>-->
+<!--      // 环境数据模拟更新 - 使用Ajax方式获取数据-->
+<!--      // 初始化环境数据-->
+<!--      let currentTemp = 22.0;-->
+<!--      let currentLight = 400;-->
+<!--      let currentHumidity = 65;-->
+
+<!--      function updateEnvironmentData() {-->
+<!--        // 模拟温度在合理范围内小幅波动（20-30°C）-->
+<!--        currentTemp = Math.max(20, Math.min(30, currentTemp + (Math.random() * 0.6 - 0.3)));-->
+<!--        // 模拟光照在合理范围内小幅波动（300-600 Lx）-->
+<!--        currentLight = Math.max(300, Math.min(600, currentLight + (Math.random() * 20 - 10)));-->
+<!--        // 模拟湿度在合理范围内小幅波动（60-75%）-->
+<!--        currentHumidity = Math.max(60, Math.min(75, currentHumidity + (Math.random() * 1 - 0.5)));-->
+
+<!--        // 更新页面上的环境数据-->
+<!--        document.getElementById('temperature').textContent = currentTemp.toFixed(1) + '°C';-->
+<!--        document.getElementById('light').textContent = Math.floor(currentLight) + ' Lx';-->
+<!--        document.getElementById('humidity').textContent = Math.floor(currentHumidity) + '%';-->
+<!--      }-->
+
+<!--      // 每2秒更新一次环境数据-->
+<!--      setInterval(updateEnvironmentData, 2000);-->
+<!--      // 立即执行一次更新-->
+<!--      updateEnvironmentData();-->
+
+<!--      // 确保页面加载后立即启动环境数据更新-->
+<!--      document.addEventListener('DOMContentLoaded', function() {-->
+<!--        // 立即启动环境数据更新-->
+<!--        updateEnvironmentData();-->
+<!--      });-->
+
+<!--      // 返回菜单函数-->
+<!--      function returnToMenu() {-->
+<!--        // 直接跳转到登录界面，它会自动显示选择界面-->
+<!--        window.location.href = 'log.html';-->
+<!--      }-->
+<!--    </script>-->
+<!--    <script src="../static/jsndex.js"></script>-->
+
+<!--  </body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据可视化</title>
+    <!-- 修改：使用 url_for 加载 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+    <style>
+        /* 添加返回菜单按钮样式 */
+        .return-menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .return-menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+  </head>
+  <body>
+    <!-- 返回菜单按钮 -->
+    <button class="return-menu-btn" onclick="returnToMenu()">返回菜单</button>
+
+    <!-- 头部的盒子 -->
+    <header>
+      <h1>牛行为监测数据可视化</h1>
+      <div class="showTime"></div>
+      <script>
+        // 实时时钟更新（保持原样，已动态）
+        var t = null;
+        t = setTimeout(time, 1000);
+        function time() {
+          clearTimeout(t);
+          dt = new Date();
+          var y = dt.getFullYear();
+          var mt = dt.getMonth() + 1;
+          var day = dt.getDate();
+          var h = dt.getHours().toString().padStart(2, '0');
+          var m = dt.getMinutes().toString().padStart(2, '0');
+          var s = dt.getSeconds().toString().padStart(2, '0');
+          document.querySelector(".showTime").innerHTML =
+            "当前时间：" +
+            y +
+            "年" +
+            mt +
+            "月" +
+            day +
+            "日 " +
+            h +
+            ":" +
+            m +
+            ":" +
+            s;
+          t = setTimeout(time, 1000);
+        }
+      </script>
+    </header>
+
+    <!-- 页面主体部分 -->
+    <section class="mainbox">
+      <div class="column">
+        <div class="panel bar">
+          <h2>柱形图-牛各行为数量</h2>
+          <div class="chart"></div>
+          <div class="panel-footer"></div>
+        </div>
+        <div class="panel line">
+          <h2>
+            折线图-异常个体数与温度的关系 <a href="javascript:;"></a
+            ><a href="javascript:;"></a>
+          </h2>
+          <div class="chart">图表</div>
+          <div class="panel-footer"></div>
+        </div>
+        <div class="panel pie">
+          <h2>折线图-异常个体数与光照强度的关系</h2>
+          <div class="chart" id="lightIntensityChart"></div>
+          <div class="panel-footer"></div>
+        </div>
+      </div>
+      <div class="column">
+        <!-- 数据统计模块 -->
+        <div class="no">
+          <div class="no-hd">
+            <ul>
+              <li>75</li>
+              <li>0</li>
+            </ul>
+          </div>
+          <div class="no-bd">
+            <ul>
+              <li>监测总数</li>
+              <li>异常数量</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 家猪行为监测模块 -->
+        <div class="pig-monitor">
+          <div class="monitor-title">
+            <h2>YOLOv11 牛行为监测</h2>
+            <div class="status">实时监测中 <span class="online">●</span></div>
+          </div>
+         <div class="monitor-view">
+    <video
+        src="{{ url_for('static', filename='images/farm1_video.mp4') }}"
+        class="monitor-img"
+        autoplay
+        muted
+        loop
+        playsinline
+        onerror="this.parentNode.innerHTML='<div style=\'color:white;text-align:center;line-height:6.5rem\'>视频加载失败</div>'"
+    ></video>
+</div>
+
+          <div class="monitor-stats">
+            <div class="stat-item">
+              <div class="stat-value">75</div>
+              <div class="stat-label">监测总数</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">12</div>
+              <div class="stat-label">异常数量</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">16.0%</div>
+              <div class="stat-label">异常率</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <!-- 环境监测模块 替换原来的bar2 -->
+        <div class="panel bar2">
+          <h2>环境监测</h2>
+          <div class="chart" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100% - 0.6rem);">
+            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">
+              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">温度:</span>
+              <span id="temperature" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">25.3°C</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">
+              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">光照:</span>
+              <span id="light" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">420 Lx</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 100%; margin: 0.2rem 0; padding: 0.1rem; background: rgba(255, 255, 255, 0.05); border-radius: 4px;">
+              <span style="color: rgba(255, 255, 255, 0.7); font-size: 0.225rem; margin-right: 0.1rem;">湿度:</span>
+              <span id="humidity" style="font-family: electronicFont; font-size: 0.35rem; color: #ffeb7b;">68%</span>
+            </div>
+          </div>
+          <div class="panel-footer"></div>
+        </div>
+
+        <div class="panel line2">
+          <h2>折线图-异常个体数与湿度的关系</h2>
+          <div class="chart">图表</div>
+          <div class="panel-footer"></div>
+        </div>
+        <div class="panel pie2">
+          <h2>饼形图-牛场分布</h2>
+          <div class="chart">图表</div>
+          <div class="panel-footer"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="farm-switcher-container">
+      <div class="farm-switcher">
+        <button id="farm1Btn" class="farm-btn active">一号牛场</button>
+        <button id="farm2Btn" class="farm-btn">二号牛场</button>
+        <button id="farm3Btn" class="farm-btn">三号牛场</button>
+        <button id="farm4Btn" class="farm-btn">四号牛场</button>
+      </div>
+    </div>
+
+    <!-- 引入外部脚本 -->
+    <!-- 修改：使用 url_for 加载 JS 文件 -->
+    <script src="{{ url_for('static', filename='js/flexible.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script>
+      // 环境数据模拟更新 - 使用Ajax方式获取数据
+      // 初始化环境数据
+      let currentTemp = 22.0;
+      let currentLight = 400;
+      let currentHumidity = 65;
+
+      function updateEnvironmentData() {
+        // 模拟温度在合理范围内小幅波动（20-30°C）
+        currentTemp = Math.max(20, Math.min(30, currentTemp + (Math.random() * 0.6 - 0.3)));
+        // 模拟光照在合理范围内小幅波动（300-600 Lx）
+        currentLight = Math.max(300, Math.min(600, currentLight + (Math.random() * 20 - 10)));
+        // 模拟湿度在合理范围内小幅波动（60-75%）
+        currentHumidity = Math.max(60, Math.min(75, currentHumidity + (Math.random() * 1 - 0.5)));
+
+        // 更新页面上的环境数据
+        document.getElementById('temperature').textContent = currentTemp.toFixed(1) + '°C';
+        document.getElementById('light').textContent = Math.floor(currentLight) + ' Lx';
+        document.getElementById('humidity').textContent = Math.floor(currentHumidity) + '%';
+      }
+
+      // 每2秒更新一次环境数据
+      setInterval(updateEnvironmentData, 2000);
+      // 立即执行一次更新
+      updateEnvironmentData();
+
+      // 确保页面加载后立即启动环境数据更新
+      document.addEventListener('DOMContentLoaded', function() {
+        // 立即启动环境数据更新
+        updateEnvironmentData();
+      });
+
+      // 返回菜单函数
+      function returnToMenu() {
+        // 直接跳转到登录界面，它会自动显示选择界面
+        window.location.href = 'log.html';
+      }
+    </script>
+    <!-- 修改：使用 url_for 加载 JS 文件 -->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script> <!-- 确保 index.js 已修改 -->
+
+
+
+<!-- 在顶部导航栏下方添加摄像头控制区域 -->
+<div class="camera-control" style="top: 60px; right: 20px;">
+    <div class="camera-status" id="camera-status">摄像头已连接 (模拟模式)</div>
+    <button id="connect-camera-btn" class="btn">重新连接</button>
+    <div id="real-camera-note" class="note">
+<!--?        * 注：本系统为模拟演示，实际未连接真实摄像头，使用预存视频流-->
+    </div>
+</div>
+
+<!-- 视频源信息 -->
+<div class="video-source" id="video-source">视频源：模拟摄像头 (farm1)</div>
+  </body>
+</html>

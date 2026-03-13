@@ -1,0 +1,847 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛场信息返回界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .return-menu-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .return-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .warning-section {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .abnormal-section {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .table-section {
+            grid-column: 1 / -1;
+            grid-row: 2;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e6ed;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .warning-list, .abnormal-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .warning-item, .abnormal-item {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .abnormal-item {
+            border-left: 4px solid #f39c12;
+        }
+
+        .warning-time, .abnormal-time {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .warning-content, .abnormal-content {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .cow-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .cow-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .cow-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e6ed;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cow-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .cow-id {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .last-activity {
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        .activity-recent {
+            background-color: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        .activity-medium {
+            background-color: #ffc107;
+        }
+
+        .activity-old {
+            background-color: #dc3545;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .close:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .health-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .health-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .health-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+
+        .health-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .behavior-chart {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .chart-title {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            gap: 10px;
+            height: 100px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 4px 4px 0 0;
+            min-height: 1px;
+            position: relative;
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-normal {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .status-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .last-seen {
+            font-size: 0.8em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+
+            .warning-section, .abnormal-section {
+                grid-column: 1;
+            }
+
+            .table-section {
+                grid-column: 1;
+            }
+
+            .health-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐮 牛场信息返回界面</h1>
+            <button class="return-menu-btn" onclick="returnToMenu()">返回菜单</button>
+        </div>
+
+        <div class="main-layout">
+            <!-- 左上角：牛场环境警告信息返回窗口 -->
+            <div class="section warning-section">
+                <div class="section-title">
+                    <i>⚠️</i> 牛场环境警告信息
+                </div>
+                <div class="warning-list" id="warningList">
+                    <!-- 警告信息将通过JavaScript动态添加 -->
+                </div>
+            </div>
+
+            <!-- 右上角：牛异常信息返回窗口 -->
+            <div class="section abnormal-section">
+                <div class="section-title">
+                    <i>🚨</i> 牛异常信息
+                </div>
+                <div class="abnormal-list" id="abnormalList">
+                    <!-- 异常信息将通过JavaScript动态添加 -->
+                </div>
+            </div>
+
+            <!-- 正下方：牛信息表格 -->
+            <div class="section table-section">
+                <div class="section-title">
+                    <i>📊</i> 牛群信息表
+                </div>
+                <table class="cow-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>状态</th>
+                            <th>最后活动时间</th>
+                            <th>位置</th>
+                            <th>健康评分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cowTableBody">
+                        <!-- 牛信息将通过JavaScript动态添加 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 牛健康信息弹窗 -->
+    <div id="healthModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalCowName">牛健康信息</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="health-info-grid" id="healthInfoGrid">
+                    <!-- 健康信息将通过JavaScript动态添加 -->
+                </div>
+
+                <div class="behavior-chart">
+                    <div class="chart-title">行为模式分析</div>
+                    <div class="chart-bars" id="behaviorChart">
+                        <!-- 行为图表将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟牛群数据
+        const cows = [
+            {
+                id: "COW001",
+                name: "牛001",
+                status: "正常",
+                lastActivity: new Date(Date.now() - 5 * 60 * 1000), // 5分钟前
+                location: "一号牛场",
+                healthScore: 95,
+                temperature: "38.2°C",
+                weight: "650kg",
+                heartRate: "68 bpm",
+                activityLevel: "高",
+                feedConsumption: "12kg",
+                sleepDuration: "6小时",
+                behaviorPattern: [70, 85, 90, 75, 80],
+                activityLog: [
+                    { time: new Date(Date.now() - 1 * 60 * 1000), activity: "饮水" },
+                    { time: new Date(Date.now() - 3 * 60 * 1000), activity: "进食" },
+                    { time: new Date(Date.now() - 5 * 60 * 1000), activity: "运动" }
+                ]
+            },
+            {
+                id: "COW002",
+                name: "牛002",
+                status: "警告",
+                lastActivity: new Date(Date.now() - 15 * 60 * 1000), // 15分钟前
+                location: "二号牛场",
+                healthScore: 75,
+                temperature: "39.1°C",
+                weight: "620kg",
+                heartRate: "85 bpm",
+                activityLevel: "中",
+                feedConsumption: "8kg",
+                sleepDuration: "4小时",
+                behaviorPattern: [60, 65, 70, 68, 72],
+                activityLog: [
+                    { time: new Date(Date.now() - 10 * 60 * 1000), activity: "进食" },
+                    { time: new Date(Date.now() - 15 * 60 * 1000), activity: "饮水" }
+                ]
+            },
+            {
+                id: "COW003",
+                name: "牛003",
+                status: "正常",
+                lastActivity: new Date(Date.now() - 3 * 60 * 1000), // 3分钟前
+                location: "三号牛场",
+                healthScore: 92,
+                temperature: "38.0°C",
+                weight: "680kg",
+                heartRate: "72 bpm",
+                activityLevel: "高",
+                feedConsumption: "14kg",
+                sleepDuration: "7小时",
+                behaviorPattern: [80, 85, 88, 82, 86],
+                activityLog: [
+                    { time: new Date(Date.now() - 1 * 60 * 1000), activity: "运动" },
+                    { time: new Date(Date.now() - 3 * 60 * 1000), activity: "社交" }
+                ]
+            },
+            {
+                id: "COW004",
+                name: "牛004",
+                status: "异常",
+                lastActivity: new Date(Date.now() - 45 * 60 * 1000), // 45分钟前
+                location: "一号牛场",
+                healthScore: 55,
+                temperature: "40.2°C",
+                weight: "590kg",
+                heartRate: "95 bpm",
+                activityLevel: "低",
+                feedConsumption: "4kg",
+                sleepDuration: "2小时",
+                behaviorPattern: [40, 35, 45, 42, 38],
+                activityLog: [
+                    { time: new Date(Date.now() - 30 * 60 * 1000), activity: "休息" },
+                    { time: new Date(Date.now() - 45 * 60 * 1000), activity: "进食" }
+                ]
+            },
+            {
+                id: "COW005",
+                name: "牛005",
+                status: "正常",
+                lastActivity: new Date(Date.now() - 2 * 60 * 1000), // 2分钟前
+                location: "二号牛场",
+                healthScore: 88,
+                temperature: "38.5°C",
+                weight: "700kg",
+                heartRate: "75 bpm",
+                activityLevel: "中",
+                feedConsumption: "11kg",
+                sleepDuration: "5小时",
+                behaviorPattern: [75, 78, 80, 76, 79],
+                activityLog: [
+                    { time: new Date(Date.now() - 1 * 60 * 1000), activity: "饮水" },
+                    { time: new Date(Date.now() - 2 * 60 * 1000), activity: "运动" }
+                ]
+            },
+            {
+                id: "COW006",
+                name: "牛006",
+                status: "警告",
+                lastActivity: new Date(Date.now() - 20 * 60 * 1000), // 20分钟前
+                location: "三号牛场",
+                healthScore: 70,
+                temperature: "39.5°C",
+                weight: "610kg",
+                heartRate: "88 bpm",
+                activityLevel: "中",
+                feedConsumption: "7kg",
+                sleepDuration: "3小时",
+                behaviorPattern: [55, 60, 58, 62, 59],
+                activityLog: [
+                    { time: new Date(Date.now() - 15 * 60 * 1000), activity: "进食" },
+                    { time: new Date(Date.now() - 20 * 60 * 1000), activity: "休息" }
+                ]
+            }
+        ];
+
+        // 模拟环境警告信息
+        const warnings = [
+            { time: new Date(Date.now() - 5 * 60 * 1000), content: "一号牛场温度过高，达到32°C" },
+            { time: new Date(Date.now() - 10 * 60 * 1000), content: "二号牛场湿度异常，达到85%" },
+            { time: new Date(Date.now() - 15 * 60 * 1000), content: "三号牛场通风系统故障" },
+            { time: new Date(Date.now() - 20 * 60 * 1000), content: "一号牛场饲料仓库温度异常" }
+        ];
+
+        // 模拟牛异常信息
+        const abnormalities = [
+            { time: new Date(Date.now() - 3 * 60 * 1000), content: "牛004体温异常升高至40.2°C" },
+            { time: new Date(Date.now() - 8 * 60 * 1000), content: "牛002进食量明显下降" },
+            { time: new Date(Date.now() - 13 * 60 * 1000), content: "牛006活动量减少" },
+            { time: new Date(Date.now() - 18 * 60 * 1000), content: "牛004心率过快" }
+        ];
+
+        // 计算相对时间的函数
+        function getRelativeTime(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+
+            if (diffSec < 60) {
+                return `${diffSec}秒前`;
+            } else if (diffMin < 60) {
+                return `${diffMin}分钟前`;
+            } else if (diffHour < 24) {
+                return `${diffHour}小时前`;
+            } else {
+                return `${diffDay}天前`;
+            }
+        }
+
+        // 获取活动指示器类名
+        function getActivityIndicatorClass(lastActivity) {
+            const now = new Date();
+            const diffMs = now - lastActivity;
+            const diffMin = Math.floor(diffMs / (60 * 1000));
+
+            if (diffMin <= 5) {
+                return 'activity-recent';
+            } else if (diffMin <= 30) {
+                return 'activity-medium';
+            } else {
+                return 'activity-old';
+            }
+        }
+
+        // 渲染警告信息列表
+        function renderWarnings() {
+            const warningList = document.getElementById('warningList');
+            warningList.innerHTML = '';
+
+            warnings.forEach(warning => {
+                const warningItem = document.createElement('div');
+                warningItem.className = 'warning-item';
+                warningItem.innerHTML = `
+                    <div class="warning-time">${formatDateTime(warning.time)} (${getRelativeTime(warning.time)})</div>
+                    <div class="warning-content">⚠️ ${warning.content}</div>
+                `;
+                warningList.appendChild(warningItem);
+            });
+        }
+
+        // 渲染异常信息列表
+        function renderAbnormalities() {
+            const abnormalList = document.getElementById('abnormalList');
+            abnormalList.innerHTML = '';
+
+            abnormalities.forEach(abnormal => {
+                const abnormalItem = document.createElement('div');
+                abnormalItem.className = 'abnormal-item';
+                abnormalItem.innerHTML = `
+                    <div class="abnormal-time">${formatDateTime(abnormal.time)} (${getRelativeTime(abnormal.time)})</div>
+                    <div class="abnormal-content">🚨 ${abnormal.content}</div>
+                `;
+                abnormalList.appendChild(abnormalItem);
+            });
+        }
+
+        // 格式化日期时间
+        function formatDateTime(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        // 渲染牛信息表格
+        function renderCowTable() {
+            const cowTableBody = document.getElementById('cowTableBody');
+            cowTableBody.innerHTML = '';
+
+            cows.forEach(cow => {
+                const row = document.createElement('tr');
+
+                // 根据状态设置徽章颜色
+                let statusClass = 'status-normal';
+                let statusText = cow.status;
+                if (cow.status === '警告') {
+                    statusClass = 'status-warning';
+                } else if (cow.status === '异常') {
+                    statusClass = 'status-danger';
+                }
+
+                // 根据活动时间设置指示器
+                const activityIndicatorClass = getActivityIndicatorClass(cow.lastActivity);
+
+                row.innerHTML = `
+                    <td class="cow-id">${cow.id}</td>
+                    <td>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </td>
+                    <td class="last-activity">
+                        <span class="activity-indicator ${activityIndicatorClass}"></span>
+                        <div>
+                            <div>${formatDateTime(cow.lastActivity)}</div>
+                            <div style="font-size: 0.8em; color: #6c757d;">(${getRelativeTime(cow.lastActivity)})</div>
+                        </div>
+                    </td>
+                    <td>${cow.location}</td>
+                    <td>${cow.healthScore}/100</td>
+                `;
+
+                // 添加点击事件显示健康信息
+                row.addEventListener('click', () => showHealthInfo(cow));
+                cowTableBody.appendChild(row);
+            });
+        }
+
+        // 更新牛活动时间（模拟实时更新）
+        function updateCowActivityTimes() {
+            // 模拟某些牛的活动更新
+            const randomIndex = Math.floor(Math.random() * cows.length);
+            const updatedCow = cows[randomIndex];
+            updatedCow.lastActivity = new Date();
+
+            // 添加新的活动记录
+            updatedCow.activityLog.unshift({
+                time: new Date(),
+                activity: getRandomActivity()
+            });
+
+            // 只保留最近5条活动记录
+            if (updatedCow.activityLog.length > 5) {
+                updatedCow.activityLog = updatedCow.activityLog.slice(0, 5);
+            }
+
+            // 重新渲染表格
+            renderCowTable();
+        }
+
+        // 生成随机活动类型
+        function getRandomActivity() {
+            const activities = ['进食', '饮水', '运动', '休息', '社交'];
+            return activities[Math.floor(Math.random() * activities.length)];
+        }
+
+        // 显示牛健康信息弹窗
+        function showHealthInfo(cow) {
+            document.getElementById('modalCowName').textContent = `${cow.name} (${cow.id}) 健康信息`;
+
+            // 显示最近活动记录
+            let activityRecords = '<div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;">';
+            activityRecords += '<h4 style="margin-bottom: 10px; color: #2c3e50;">最近活动记录:</h4>';
+            cow.activityLog.forEach(record => {
+                activityRecords += `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; padding: 5px 0;">
+                        <span>${record.activity}</span>
+                        <span style="color: #6c757d; font-size: 0.9em;">${formatDateTime(record.time)} (${getRelativeTime(record.time)})</span>
+                    </div>
+                `;
+            });
+            activityRecords += '</div>';
+
+            const healthInfoGrid = document.getElementById('healthInfoGrid');
+            healthInfoGrid.innerHTML = `
+                <div class="health-item">
+                    <div class="health-label">体温</div>
+                    <div class="health-value">${cow.temperature}</div>
+                </div>
+                <div class="health-item">
+                    <div class="health-label">体重</div>
+                    <div class="health-value">${cow.weight}</div>
+                </div>
+                <div class="health-item">
+                    <div class="health-label">心率</div>
+                    <div class="health-value">${cow.heartRate}</div>
+                </div>
+                <div class="health-item">
+                    <div class="health-label">活动水平</div>
+                    <div class="health-value">${cow.activityLevel}</div>
+                </div>
+                <div class="health-item">
+                    <div class="health-label">采食量</div>
+                    <div class="health-value">${cow.feedConsumption}</div>
+                </div>
+                <div class="health-item">
+                    <div class="health-label">睡眠时长</div>
+                    <div class="health-value">${cow.sleepDuration}</div>
+                </div>
+                ${activityRecords}
+            `;
+
+            // 渲染行为图表
+            renderBehaviorChart(cow.behaviorPattern);
+
+            // 显示弹窗
+            document.getElementById('healthModal').style.display = 'block';
+        }
+
+        // 渲染行为图表
+        function renderBehaviorChart(pattern) {
+            const chartContainer = document.getElementById('behaviorChart');
+            chartContainer.innerHTML = '';
+
+            const labels = ['进食', '饮水', '休息', '运动', '社交'];
+
+            pattern.forEach((value, index) => {
+                const barContainer = document.createElement('div');
+                barContainer.style.position = 'relative';
+                barContainer.style.flex = '1';
+
+                const barHeight = (value / 100) * 80; // 最大高度80px
+
+                barContainer.innerHTML = `
+                    <div class="chart-bar" style="height: ${barHeight}px;">
+                        <div class="chart-label">${labels[index]}</div>
+                    </div>
+                `;
+
+                chartContainer.appendChild(barContainer);
+            });
+        }
+
+        // 关闭弹窗事件
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('healthModal').style.display = 'none';
+        });
+
+        // 点击弹窗外部关闭
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('healthModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // 初始化页面
+        function initPage() {
+            renderWarnings();
+            renderAbnormalities();
+            renderCowTable();
+
+            // 每5秒更新一次牛的活动时间（模拟实时活动）
+            setInterval(updateCowActivityTimes, 5000);
+        }
+
+        // 返回菜单函数
+        function returnToMenu() {
+            // 直接跳转到登录界面，它会自动显示选择界面
+            window.location.href = 'log.html';
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
